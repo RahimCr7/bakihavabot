@@ -1,20 +1,21 @@
-# 🎵 BURA BÜTÜN MAHNILARIN TELEGRAM KODLARINI YIĞIRIQ
-# Hər janrın içinə 100-dənə də kod daxil etsən, vergüllə alt-alta yaza bilərsən!
+# 🎵 BÜTÜN MAHNILARIN TELEGRAM GİZLİ KODLARI
+# Bota musiqi botlarından yönləndirib aldığın kodları bura daxil edirsən.
+# Hər janra 50-100 mahnı kodu əlavə edə bilərsən, sadəcə vergüllə alt-alta yaz!
 
 mahni_bazasi = {
     "bass": [
-        "CQACAgIAAxkBAAO3aqm5Rn2q3FeCXHDNqIk-s6RPX9wAAqugAAKYJrFIkxCMomUByoo9BA" # Nümunə link
+        "CQACAgIAAxkBAAO3aqm5Rn2q3FeCXHDNqIk-s6RPX9wAAqugAAKYJrFIkxCMomUByoo9BA" # Sənin indicə aldığın ilk işlək real kod!
     ],
     "azeri": [
-        "https://soundhelix.com" # Sənin indicə aldığın ilk real kod!
+        "CQACAgIAAxkBAAO3aqm5Rn2q3FeCXHDNqIk-s6RPX9wAAqugAAKYJrFIkxCMomUByoo9BA" # Yoxlamaq üçün eyni kodu bura da qoyuruq
     ],
     "rus": [
-        "https://soundhelix.com"
+        "CQACAgIAAxkBAAO3aqm5Rn2q3FeCXHDNqIk-s6RPX9wAAqugAAKYJrFIkxCMomUByoo9BA"
     ],
     "turk": [
-        "https://soundhelix.com"
+        "CQACAgIAAxkBAAO3aqm5Rn2q3FeCXHDNqIk-s6RPX9wAAqugAAKYJrFIkxCMomUByoo9BA"
     ],
     "meyxana": [
-        "https://soundhelix.com"
+        "CQACAgIAAxkBAAO3aqm5Rn2q3FeCXHDNqIk-s6RPX9wAAqugAAKYJrFIkxCMomUByoo9BA"
     ]
 }
