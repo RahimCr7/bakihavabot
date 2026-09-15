@@ -13,13 +13,8 @@ bot = telebot.TeleBot(TOKEN, threaded=False)
 
 ADMIN_ID = 55443322  
 
-mahni_bazasi = {
-    "bass": ["https://soundhelix.com"],
-    "azeri": ["https://soundhelix.com"],
-    "rus": ["https://soundhelix.com"],
-    "turk": ["https://soundhelix.com"],
-    "meyxana": ["https://soundhelix.com"]
-}
+from musiqi import mahni_bazasi
+
 
 # 🌐 RENDER PLATFORMASINI ALDATMAQ ÜÇÜN SAXTA İNTERNET PORTU
 app = Flask('')
