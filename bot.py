@@ -6,6 +6,7 @@ import schedule
 import random
 from datetime import datetime
 import pytz
+from flask import Flask # Render kilitlənməsini önləmək üçün internet server köməkçisi
 
 TOKEN = "8883498106:AAHr37lxE_kLy_za0TZHlGyfX_9iMI_Yqsc"
 bot = telebot.TeleBot(TOKEN, threaded=False)
@@ -19,6 +20,17 @@ mahni_bazasi = {
     "turk": ["https://soundhelix.com"],
     "meyxana": ["https://soundhelix.com"]
 }
+
+# 🌐 RENDER PLATFORMASINI ALDATMAQ ÜÇÜN SAXTA İNTERNET PORTU
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot aktivdir və 7/24 işləyir!"
+
+def run_flask():
+    # Render avtomatik olaraq 10000 portunu dinləyir
+    app.run(host='0.0.0.0', port=10000)
 
 def dynamic_hava_durumu_al():
     aylar = ["Yanvar", "Fevral", "Mart", "Aprel", "May", "İyun", "İyul", "Avqust", "Sentyabr", "Oktabr", "Noyabr", "Dekabr"]
@@ -59,8 +71,7 @@ def baku_saatiyle_planla(saat_str, gorev_fonksiyonu):
     
     threading.Thread(target=kontrol_et, daemon=True).start()
 
-# HƏR SƏHƏR REAL BAKU SAATIYLA 08:00-DA QRUPA AVTOMATİK ATIR!
-baku_saatiyle_planla("07:00", avto_hava_gonder)
+baku_saatiyle_planla("08:00", avto_hava_gonder)
 
 @bot.message_handler(commands=['start'])
 def start_menyu(message):
@@ -141,8 +152,11 @@ def mahni_gonder(call):
         except Exception as e:
             bot.send_message(call.message.chat.id, "❌ Bu janra hələ tam mahnı kodu əlavə edilmeyib.")
 
+# 🚀 SAXTA SERVERİ ARXA FONDA İŞƏ SALIRIQ
+threading.Thread(target=run_flask, daemon=True).start()
+
 bot.remove_webhook()
-print("Render üçün kilitlənməz rejim hazırlandı...")
+print("Render üçün kilitlənməz rejim port dəstəyi ilə hazırlandı...")
 
 while True:
     try:
