@@ -2,16 +2,25 @@ import telebot
 from telebot import types
 import time
 import threading
-import schedule
 import random
+import os
 from datetime import datetime
 import pytz
-from flask import Flask # Render kilitlənməsini önləmək üçün internet server köməkçisi
+from flask import Flask  # Render kilitlənməsini önləmək üçün internet server köməkçisi
 
-TOKEN = "8883498106:AAHr37lxE_kLy_za0TZHlGyfX_9iMI_Yqsc"
+# ---------------------------------------------------
+# TOKEN VƏ ADMIN ID artıq kodun içində YAZILMIR.
+# Render > Environment bölməsində əlavə etməlisən:
+#   Key: BOT_TOKEN   -> Value: yeni token'ın
+#   Key: ADMIN_ID     -> Value: 55443322 (istəsən dəyişə bilərsən)
+# ---------------------------------------------------
+TOKEN = os.environ.get("BOT_TOKEN")
+ADMIN_ID = int(os.environ.get("ADMIN_ID", "55443322"))
+
+if not TOKEN:
+    raise RuntimeError("BOT_TOKEN tapılmadı! Render > Environment bölməsinə əlavə et.")
+
 bot = telebot.TeleBot(TOKEN, threaded=False)
-
-ADMIN_ID = 55443322  
 
 from musiqi import mahni_bazasi
 
@@ -31,12 +40,12 @@ def dynamic_hava_durumu_al():
     aylar = ["Yanvar", "Fevral", "Mart", "Aprel", "May", "İyun", "İyul", "Avqust", "Sentyabr", "Oktabr", "Noyabr", "Dekabr"]
     baku_tz = pytz.timezone('Asia/Baku')
     indiki_vaxt = datetime.now(baku_tz)
-    
+
     ay_adi = aylar[indiki_vaxt.month - 1]
     gun_bugun = indiki_vaxt.day
     gun_sabah = gun_bugun + 1
     current_month = indiki_vaxt.month
-    
+
     if current_month == 12 or current_month == 1 or current_month == 2:
         t1, t2, status1, status2, yuma = "+7", "+5", "Buludlu, yağıntılı 🌧", "Sulu qar 💨", "❌ Maşını bu gün yumayın! 💸"
     elif current_month >= 3 and current_month <= 5:
@@ -61,12 +70,13 @@ def baku_saatiyle_planla(saat_str, gorev_fonksiyonu):
             simdi = datetime.now(baku_tz).strftime("%H:%M")
             if simdi == saat_str:
                 gorev_fonksiyonu()
-                time.sleep(60)
+                time.sleep(60)  # eyni dəqiqədə ikinci dəfə işə düşməsin
             time.sleep(10)
-    
+
     threading.Thread(target=kontrol_et, daemon=True).start()
 
-baku_saatiyle_planla("08:00", avto_hava_gonder)
+# ⏰ Hər gün Bakı vaxtı ilə saat 07:00-da avtomatik hava mesajı
+baku_saatiyle_planla("07:00", avto_hava_gonder)
 
 @bot.message_handler(commands=['start'])
 def start_menyu(message):
@@ -75,7 +85,7 @@ def start_menyu(message):
     duyme_radar = types.KeyboardButton("📸 Sabit Radarlar")
     duyme_qeza_bildir = types.KeyboardButton("⚠️ Qəza / Tıxac Bildir")
     duyme_musiqi = types.KeyboardButton("🎵 Maşın Mahnıları")
-    
+
     menu.add(duyme_hava, duyme_radar)
     menu.add(duyme_qeza_bildir, duyme_musiqi)
     bot.send_message(message.chat.id, f"Salam, {message.from_user.first_name}! Botumuz aktivdir. Düymələrdən istifadə edin:", reply_markup=menu)
